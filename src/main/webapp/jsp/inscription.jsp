@@ -12,7 +12,7 @@
 
 <h1>ANPEP</h1>
 
-<h1>Inscription</h1>
+<h2>Inscription</h2>
 
 <form action='inscription?to=inscription' method="POST" id="inscription">
 
@@ -32,6 +32,11 @@
 	</div>
 	
 	<div class="inscription_field">
+	<label for="password" id="password">Mot de Passe</label>
+	<input type="password" name="password" id="password">
+	</div>
+	
+	<div class="inscription_field">
 	<label for="phone" id="phone">Téléphone</label>
 	<input type="text" name="phone" id="phone">
 	</div>
@@ -44,11 +49,11 @@
 	
 	<div class="inscription_field">
 	<p>Genre</p>
-	<input type="radio" name="homme" id="homme" value="0">
+	<input type="radio" name="homme" id="homme" value="M">
 	<label for="homme" id="homme">Homme</label>
-	<input type="radio" name="femme" id="femme" value="1">
+	<input type="radio" name="femme" id="femme" value="F">
 	<label for="femme" id="femme">Femme</label>
-	<input type="radio" name="autre" id="autre" value="2">
+	<input type="radio" name="autre" id="autre" value="O">
 	<label for="autre" id="autre">Autre</label>
 	</div>
 	
