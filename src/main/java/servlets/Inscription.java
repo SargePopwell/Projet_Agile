@@ -45,28 +45,21 @@ public class Inscription extends HttpServlet {
 			User user = new User();
 			
 			user.setSurname(request.getParameter("surname"));
-			System.out.println(user.getSurname());
 			user.setName(request.getParameter("name"));
-			System.out.println(user.getName());
 			user.setEmail(request.getParameter("email"));
-			System.out.println(user.getEmail());
 			user.setPassword(request.getParameter("password"));
-			System.out.println(user.getPassword());
 			user.setPhone(request.getParameter("phone"));
-			System.out.println(user.getPhone());
 			user.setAdress(request.getParameter("adress"));
-			System.out.println(user.getAdress());
+			
 			if (request.getParameter("homme") != null)
 				user.setGender(request.getParameter("homme"));
 			else if (request.getParameter("femme") != null)
 				user.setGender(request.getParameter("femme"));
 			else if (request.getParameter("autre") != null)
 				user.setGender(request.getParameter("autre"));
-			System.out.println(user.getGender());
+
 			user.setIntern(false);
-			System.out.println(user.isIntern());
 			user.setIdFormation(1);
-			System.out.println(user.getIdFormation());
 			
 			user.insert();
 

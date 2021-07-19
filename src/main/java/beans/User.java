@@ -148,6 +148,40 @@ public class User implements Crud{
 		return users;
 	}
 	
+	public ArrayList<User> selectAllInternsByFormation() {
+		String query = "select 'id_user',`surname`, `name`, `email`, `password`, `phone`, `adress`, `gender`, `id_formation`"
+				+ "from intern i, formation f WHERE i.id_formation = f.id_formation AND i.id_formation = ? ";
+		ArrayList<User> users = new ArrayList<>();
+		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
+			p.setInt(1, getIdFormation());
+			
+			ResultSet result = p.executeQuery();
+			while (result.next()) {
+				User u = new User();
+				u.setIdUser(result.getInt("id_user"));
+				u.setSurname(result.getString("surname"));
+				u.setName(result.getString("name"));
+				u.setEmail(result.getString("email"));
+				u.setPassword(result.getString("password"));
+				u.setPhone(result.getString("phone"));
+				u.setAdress(result.getString("adress"));
+				u.setGender(result.getString("gender"));
+				u.setIdFormation(result.getInt("id_formation"));
+				u.setIntern(this.isIntern()); // L'user créé est soit intern soit former
+				
+				users.add(u);
+			}
+				
+			
+			DbConnect.getConnector().close();
+			
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 	@Override
 	public User select() {
 		String query = "select `surname`, `name`, `email`,`password`, `phone`, `adress`, `gender`, `id_formation`"

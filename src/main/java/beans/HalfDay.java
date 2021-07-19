@@ -13,6 +13,7 @@ public class HalfDay implements Crud{
 	private int idHd;
 	private Date date;
 	private boolean morning;
+	private int idUser;
 	
 	public int getIdHd() {
 		return idHd;
@@ -33,14 +34,22 @@ public class HalfDay implements Crud{
 		this.morning = morning;
 	}
 	
+	public int getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(int idUser) {
+		this.idUser = idUser;
+	}
+	
 	@Override
 	public void insert() {
-		String query = "INSERT INTO `half_day`("
-				+  "'date`, `morning`)"
-				+ " VALUES (?,?)";
+		String query = "INSERT INTO half_day("
+				+  "date, morning, id_user)"
+				+ " VALUES (?,?,?)";
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
 			p.setDate(1, getDate());
 			p.setBoolean(2, isMorning());
+			p.setInt(3,  getIdUser());
 			
 			p.executeUpdate();
 			

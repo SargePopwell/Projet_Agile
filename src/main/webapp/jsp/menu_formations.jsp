@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="beans.Formation"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,21 +18,23 @@
 <h2>Menu Formations</h2>
 
 
-<c:forEach var='formation' items="${ formations }">
+<c:forEach var="f" items="${ formations }">
+<a href="formation?to=${ f.idFormation }">
 <div class="formation">
-<h3>NOM formation</h3>
-<p>Date de début / Date de fin</p>
-<p>Description </p>
+<h3>${ f.name }</h3>
+<p>${ f.dateStart } / ${ f.dateEnd }</p>
+<p>${ f.description } </p>
 </div>
+</a>
 </c:forEach>
 
 
-<form action="menuFormations" method="POST" id="add_formation">
+<form action="menu_formations?action=add_formation" method="POST" id="add_formation">
 <h2>Ajouter une formation</h2>
 
 <div class="field">
 <label for="intitule" id="intitule">Intitulé de la formation</label>
-<input type="text" name="name" id="name">
+<input type="text" name="intitule" id="intitule">
 </div>
 
 <div class="field">

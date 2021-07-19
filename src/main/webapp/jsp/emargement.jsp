@@ -14,13 +14,13 @@
 
 <h2>Bienvenue, Utilisateur</h2>
 
-<form action="dataIn" method="POST" id="emargement_AM">
+<form action="emargement?action=AM" method="POST" id="emargement_AM">
 <p>Je soussigné X atteste avoir été présent durant la matinée du Y. <p>
 <input type="checkbox" name="AM" id="AM">
 <input type="submit" value="Envoyer">
 </form>
 
-<form action="dataIn" method="POST" id="emargement_PM">
+<form action="emargement?action=PM" method="POST" id="emargement_PM">
 <p>Je soussigné X atteste avoir été présent durant l'après-midi du Y.<p>
 <input type="checkbox" name="PM" id="PM">
 <input type="submit" value="Envoyer">

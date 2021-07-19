@@ -15,7 +15,6 @@ public class Formation implements Crud{
 	private Date dateStart;
 	private Date dateEnd;
 	private String description;
-	private int idDay;
 	private int idUser;
 	
 	public int getIdFormation() {
@@ -48,12 +47,6 @@ public class Formation implements Crud{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getIdDay() {
-		return idDay;
-	}
-	public void setIdDay(int idDay) {
-		this.idDay = idDay;
-	}
 	public int getIdUser() {
 		return idUser;
 	}
@@ -63,16 +56,15 @@ public class Formation implements Crud{
 	
 	@Override
 	public void insert() {
-		String query = "INSERT INTO `formation`("
-				+  "'name`, `date_start`, `date_end`, `description`, `id_day`, `id_user`)"
-				+ " VALUES (?,?,?,?,?,?)";
+		String query = "INSERT INTO formation("
+				+  "name, date_start, date_end, description, id_admin)"
+				+ " VALUES (?,?,?,?,?)";
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)){
 			p.setString(1, getName());
 			p.setDate(2, getDateStart());
 			p.setDate(3, getDateEnd());
 			p.setString(4, getDescription());
-			p.setInt(5, getIdDay());
-			p.setInt(6, getIdUser());
+			p.setInt(5, getIdUser());
 			
 			p.executeUpdate();
 			
@@ -90,12 +82,12 @@ public class Formation implements Crud{
 	
 	@Override
 	public List<?> selectAll() {
-		String query = "SELECT 'id_formation', `name`, `date_start`, `date_end`, `description`, `id_day`, `id_user`"
-				+ " FROM `formation`";
+		String query = "SELECT id_formation, name, date_start, date_end, description, id_admin"
+				+ " FROM formation";
 		ArrayList<Formation> formations = new ArrayList<>();
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
 			
-			ResultSet result = p.executeQuery(query);
+			ResultSet result = p.executeQuery();
 			while (result.next()) {
 				Formation f = new Formation();
 				f.setIdFormation(result.getInt("id_formation"));
@@ -103,8 +95,7 @@ public class Formation implements Crud{
 				f.setDateStart(result.getDate("date_start"));
 				f.setDateEnd(result.getDate("date_end"));
 				f.setDescription(result.getString("description"));
-				f.setIdDay(result.getInt("id_day"));
-				f.setIdUser(result.getInt("id_user"));
+				f.setIdUser(result.getInt("id_admin"));
 				
 				formations.add(f);
 			}
@@ -121,12 +112,12 @@ public class Formation implements Crud{
 	
 	@Override
 	public Formation select() {
-		String query = "SELECT 'id_formation', `name`, `date_start`, `date_end`, `description`, `id_day`, `id_user`"
+		String query = "SELECT 'id_formation', `name`, `date_start`, `date_end`, `description`, `id_user`"
 				+ " FROM `formation` where id_formation = ?";
 		
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
 			p.setInt(1,  getIdFormation());
-			ResultSet result = p.executeQuery(query);
+			ResultSet result = p.executeQuery();
 			while (result.next()) {
 				
 				
@@ -134,7 +125,6 @@ public class Formation implements Crud{
 				this.setDateStart(result.getDate("date_start"));
 				this.setDateEnd(result.getDate("date_end"));
 				this.setDescription(result.getString("description"));
-				this.setIdDay(result.getInt("id_day"));
 				this.setIdUser(result.getInt("id_user"));
 				
 				
@@ -152,16 +142,16 @@ public class Formation implements Crud{
 	@Override
 	public void update() {
 		String query = "update `formation`"
-				+ "set `name` = ?, `date_start` = ?, `date_end` = ?, `description` = ?, `id_day` = ?, `id_user` = ?"				+ " `id_formation` = ?"
+				+ "set `name` = ?, `date_start` = ?, `date_end` = ?, `description` = ?, `id_user` = ?"
+				+ " `id_formation` = ?"
 				+ " where id_formation = ?";
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
 			p.setString(1, getName());
 			p.setDate(2, getDateStart());
 			p.setDate(3, getDateEnd());
 			p.setString(4, getDescription());
-			p.setInt(5, getIdDay());
-			p.setInt(6, getIdUser());
-			p.setInt(7, getIdFormation());
+			p.setInt(5, getIdUser());
+			p.setInt(6, getIdFormation());
 			
 			
 			p.executeUpdate();
