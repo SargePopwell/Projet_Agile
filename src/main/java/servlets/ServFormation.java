@@ -35,20 +35,38 @@ public class ServFormation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		Formation f = new Formation();
-		Day d = new Day();
-		User u = new User();
-		HalfDay hd = new HalfDay();
+		
 		
 		if(request.getParameter("to") != null) {
+			
+			Formation f = new Formation();
+			Day d = new Day();
+			User u = new User();
+			HalfDay hd = new HalfDay();
+			User former = new User();
+			
 			f.setIdFormation(Integer.parseInt(request.getParameter("to")));
 			f.select();
 			d.setIdFormation(f.getIdFormation());
+			u.setIdFormation(f.getIdFormation());
 			
 			ArrayList<Day> days = d.selectAllByFormation();
 			ArrayList<User> interns = u.selectAllInternsByFormation();
 			
+			for (User i : interns){
+				hd.setIdUser(i.getIdUser());
+				i.setHalfdays(hd.selectAllByIntern());
+			}
 			
+			ArrayList<HalfDay> hds = interns.get(0).getHalfdays();
+			
+			System.out.println(hds.get(0).isIchecked());
+			
+			request.setAttribute("d1", hds.get(0));
+			request.setAttribute("test", true);
+			request.setAttribute("formation", f);
+			request.setAttribute("days", days);
+			request.setAttribute("interns", interns);	
 		}
 		
 		

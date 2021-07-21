@@ -112,7 +112,7 @@ public class Formation implements Crud{
 	
 	@Override
 	public Formation select() {
-		String query = "SELECT 'id_formation', `name`, `date_start`, `date_end`, `description`, `id_user`"
+		String query = "SELECT 'id_formation', `name`, `date_start`, `date_end`, `description`, `id_admin`"
 				+ " FROM `formation` where id_formation = ?";
 		
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
@@ -125,7 +125,7 @@ public class Formation implements Crud{
 				this.setDateStart(result.getDate("date_start"));
 				this.setDateEnd(result.getDate("date_end"));
 				this.setDescription(result.getString("description"));
-				this.setIdUser(result.getInt("id_user"));
+				this.setIdUser(result.getInt("id_admin"));
 				
 				
 			}
@@ -142,7 +142,7 @@ public class Formation implements Crud{
 	@Override
 	public void update() {
 		String query = "update `formation`"
-				+ "set `name` = ?, `date_start` = ?, `date_end` = ?, `description` = ?, `id_user` = ?"
+				+ "set `name` = ?, `date_start` = ?, `date_end` = ?, `description` = ?, `id_admin` = ?"
 				+ " `id_formation` = ?"
 				+ " where id_formation = ?";
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
@@ -152,6 +152,7 @@ public class Formation implements Crud{
 			p.setString(4, getDescription());
 			p.setInt(5, getIdUser());
 			p.setInt(6, getIdFormation());
+			p.setInt(7, getIdFormation());
 			
 			
 			p.executeUpdate();

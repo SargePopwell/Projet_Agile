@@ -15,6 +15,9 @@ public class Day implements Crud {
 	private String activity;
 	private int idFormer;
 	private int idFormation;
+	private String surnameFormer;
+	private String nameFormer;
+	
 	
 	
 	public int getIdDay() {
@@ -48,7 +51,18 @@ public class Day implements Crud {
 	public void setIdFormation(int idFormation) {
 		this.idFormation = idFormation;
 	}
-	
+	public String getSurnameFormer() {
+		return surnameFormer;
+	}
+	public void setSurnameFormer(String surnameFormer) {
+		this.surnameFormer = surnameFormer;
+	}
+	public String getNameFormer() {
+		return nameFormer;
+	}
+	public void setNameFormer(String nameFormer) {
+		this.nameFormer = nameFormer;
+	}
 	
 	@Override
 	public void insert() {
@@ -101,8 +115,9 @@ public class Day implements Crud {
 	}
 	
 	public ArrayList<Day> selectAllByFormation() {
-		String query = "SELECT id_day, date, activity, d.id_formation, id_former"
-				+ " FROM day d, formation f WHERE d.id_formation = f.id_formation AND d.id_formation = ?";
+		String query = "SELECT id_day, date, activity, d.id_formation, d.id_former, fo.surname, fo.name  "
+				+ " FROM day d, formation f, former fo WHERE d.id_formation = f.id_formation AND d.id_formation = ?"
+				+ " AND d.id_former = fo.id_former;";
 		ArrayList<Day> days = new ArrayList<>();
 		try (PreparedStatement p = DbConnect.getConnector().prepareStatement(query)){
 			
@@ -116,6 +131,8 @@ public class Day implements Crud {
 				d.setActivity(result.getString("activity"));
 				d.setIdFormation(result.getInt("id_formation"));
 				d.setIdFormer(result.getInt("id_former"));
+				d.setSurnameFormer(result.getString("surname"));
+				d.setNameFormer(result.getString("name"));
 				
 				days.add(d);
 			}

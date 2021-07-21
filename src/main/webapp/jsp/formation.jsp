@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="css/style.css">
 <title>ANPEP - ${ formation.name }</title>
 </head>
 <body>
@@ -31,26 +32,55 @@
 	<th>Matin</th>
 	<th>Après-midi</th>
 </tr>
-
 	<c:forEach var="d" items="${ days }">
 	<tr>
-		<td colspan = 7>Formateur Intervenant = ${ former.name }</td>
+		<td colspan = 7>Formateur Intervenant = ${ d.surnameFormer } ${ d.nameFormer }</td>
 	</tr>
 		<c:forEach var="i" items="${ interns }">
+		
 		<tr>
 			<td>${ i.surname }</td>
 			<td>${ i.name }</td>
 			<td>${ d.date }</td>
-			<td>${ presentAM? "good":"pas good" }</td>
-			<td>${ presentPM? "good":"pas good" }</td>
-			<td>${ presentAMF? "good":"pas good" }</td>
-			<td>${ presentPMF? "good":"pas good" }</td>
+			
+			<c:forEach var="hd" items="${ i.halfdays }">
+			<c:if test="${ hd.date == d.date }">
+			
+			<c:choose>
+				<c:when test="${ hd.ichecked }">
+				<td>YES</td>
+				</c:when>
+				<c:when test="${ !hd.ichecked }">
+				<td>NOPE</td>
+				</c:when>
+				<c:otherwise>
+				<td>NOT YET</td>
+				</c:otherwise>
+			</c:choose>
+			
+			</c:if>
+			</c:forEach>
+			
+			<c:forEach var="hd" items="${ i.halfdays }">
+			<c:if test="${ hd.date == d.date }">
+			
+			<c:choose>
+				<c:when test="${ hd.fchecked }">
+				<td>YES</td>
+				</c:when>
+				<c:when test="${ !hd.fchecked }">
+				<td>NOPE</td>
+				</c:when>
+				<c:otherwise>
+				<td>NOT YET</td>
+				</c:otherwise>
+			</c:choose>
+			
+			</c:if>
+			</c:forEach>
 		</tr>
 		</c:forEach>
-	
-	</c:forEach>
-
-
+	</c:forEach>	
 </table>
 
 </body>
